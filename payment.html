@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าชำระเงิน - Payment</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>| PARADISE RESORT</h1>
+        <p>Room Booking & Payment</p>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="booking.html">Booking</a>
+            <a href="group.html">Group</a>
+        </nav>
+    </header>
+
+    <section>
+        <h2>เลือกช่องทางการชำระเงิน</h2>
+        
+        <div class="payment-container">
+            <form action="index.html" method="GET" style="flex: 2 1 450px;">
+                
+                <!-- ตัวเลือก Radio -->
+                <div class="payment-methods">
+                    <label class="payment-method-item">
+                        <input type="radio" name="payment_method" value="credit_card" checked onchange="togglePaymentMethod('credit_card')">
+                        <span>บัตรเครดิต / เดบิต</span>
+                    </label>
+                    <label class="payment-method-item">
+                        <input type="radio" name="payment_method" value="promptpay" onchange="togglePaymentMethod('promptpay')">
+                        <span>พร้อมเพย์ (QR Code)</span>
+                    </label>
+                    <label class="payment-method-item">
+                        <input type="radio" name="payment_method" value="bank_transfer" onchange="togglePaymentMethod('bank_transfer')">
+                        <span>โอนผ่านบัญชีธนาคาร</span>
+                    </label>
+                </div>
+
+                <!-- กล่องที่ 1: บัตรเครดิต/เดบิต -->
+                <div id="box-credit_card" class="payment-tab-content active">
+                    <h3 style="margin-top: 0; color: #173f3a;">ข้อมูลบัตรเครดิต / เดบิต</h3>
+                    <div class="form-group">
+                        <label for="card_name">ชื่อบนบัตร:</label>
+                        <input type="text" id="card_name" placeholder="สมชาย ใจดี">
+                    </div>
+                    <div class="form-group">
+                        <label for="card_number">หมายเลขบัตร:</label>
+                        <input type="text" id="card_number" placeholder="xxxx xxxx xxxx xxxx" maxlength="19">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="exp_date">วันหมดอายุ:</label>
+                            <input type="text" id="exp_date" placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">รหัส CVV:</label>
+                            <input type="password" id="cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- กล่องที่ 2: พร้อมเพย์ (QR Code Mockup) -->
+                <div id="box-promptpay" class="payment-tab-content">
+                    <h3 style="margin-top: 0; color: #173f3a;">สแกน QR Code เพื่อชำระเงิน</h3>
+                    <div class="qr-box">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MockupParadiseResortPayment" alt="PromptPay QR Code">
+                        <p style="margin: 0; font-weight: bold; color: #a56b16;">ยอดชำระ: ฿2,675</p>
+                        <small style="color: #666;">เปิดแอปธนาคารของท่านเพื่อสแกน QR Code นี้</small>
+                    </div>
+                </div>
+
+                <!-- กล่องที่ 3: โอนผ่านบัญชีธนาคาร -->
+                <div id="box-bank_transfer" class="payment-tab-content">
+                    <h3 style="margin-top: 0; color: #173f3a;">ข้อมูลบัญชีสำหรับโอนเงิน</h3>
+                    <div class="bank-info">
+                        <p style="margin: 0;"><strong>ธนาคารกสิกรไทย (KBANK)</strong></p>
+                        <p style="margin: 3px 0;">เลขที่บัญชี: <strong style="color: #a56b16;">123-4-56789-0</strong></p>
+                        <p style="margin: 0;">ชื่อบัญชี: บจก. พาราไดซ์ รีสอร์ท</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="slip">แนบหลักฐานการโอนเงิน (สลิป):</label>
+                        <input type="file" id="slip" accept="image/*">
+                    </div>
+                </div>
+
+                <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" id="terms" required>
+                    <label for="terms" style="margin-top: 0; font-size: 14px;">ฉันยอมรับเงื่อนไขและข้อตกลงการให้บริการ</label>
+                </div>
+
+                <button type="submit" class="btn-submit">ยืนยันการชำระเงิน</button>
+            </form>
+
+            <!-- สรุปรายการคำสั่งซื้อ -->
+            <div class="order-summary">
+                <h3 style="margin-top: 0; color: #173f3a;">สรุปคำสั่งซื้อ</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>รายการ</th>
+                            <th style="text-align: right;">ราคา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ค่าห้องพัก Deluxe Room</td>
+                            <td style="text-align: right;">฿2,500</td>
+                        </tr>
+                        <tr>
+                            <td>ภาษีมูลค่าเพิ่ม (7%)</td>
+                            <td style="text-align: right;">฿175</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ยอดรวมสุทธิ</strong></td>
+                            <td style="text-align: right;" class="price">฿2,675</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 13px; color: #666; margin-top: 15px;">
+                    * ข้อมูลการทำธุรกรรมของคุณได้รับการปกป้องด้วยความปลอดภัยมาตรฐาน
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p><a href="group.html">Group Members</a></p>
+        <p>&copy; 2026 Paradise Resort</p>
+    </footer>
+
+    <!-- JavaScript สำหรับสลับกล่องแสดงผล -->
+    <script>
+        function togglePaymentMethod(method) {
+            // ซ่อนทุกแท็บก่อน
+            const tabs = document.querySelectorAll('.payment-tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // แสดงเฉพาะแท็บที่เลือก
+            const activeTab = document.getElementById('box-' + method);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>

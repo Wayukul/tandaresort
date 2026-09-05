@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tanda Resort - แบบฟอร์มจองห้องพัก">
+    <title>Tanda Resort | Booking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>| Tanda RESORT</h1>
+    <p>Room Booking</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="booking.html">Booking</a>
+        <a href="index.html#rooms">Rooms</a>
+        <a href="index.html#facilities">Facilities</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="group.html">Group</a>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Book Your Stay</h2>
+        <p>กรอกข้อมูลเพื่อส่งคำขอจองห้องพักกับ Tanda Resort</p>
+
+        <form action="payment.html" method="GET">
+            <fieldset>
+                <legend>Booking Information</legend>
+
+                <p>
+                    <label for="name">ชื่อ-นามสกุล:</label>
+                    <input type="text" id="name" name="name" required>
+                </p>
+
+                <p>
+                    <label for="email">อีเมล:</label>
+                    <input type="email" id="email" name="email" required placeholder="xxx@xxx.xxx">
+                </p>
+
+                <p>
+                    <label for="phone">เบอร์โทรศัพท์:</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="0xxxxxxxxx">
+                </p>
+
+                <p>
+                    <label for="room">ประเภทห้องพัก:</label>
+                    <select id="room" name="room" required>
+                        <option value="">-- กรุณาเลือกห้องพัก --</option>
+                        <option value="deluxe">Deluxe Room - 2,500 บาท</option>
+                        <option value="family">Family Room - 3,500 บาท</option>
+                        <option value="pool-villa">Pool Villa - 4,500 บาท</option>
+                    </select>
+                </p>
+
+                <p>
+                    <label for="checkin">วันที่เข้าพัก:</label>
+                    <input type="date" id="checkin" name="checkin" required>
+                </p>
+
+                <p>
+                    <label for="checkout">วันที่ออก:</label>
+                    <input type="date" id="checkout" name="checkout" required>
+                </p>
+
+                <p>
+                    <label for="guests">จำนวนผู้เข้าพัก:</label>
+                    <input type="number" id="guests" name="guests" min="1" max="10" required>
+                </p>
+
+                <p>
+                    <label for="message">รายละเอียดเพิ่มเติม:</label>
+                    <textarea id="message" name="message" rows="5"
+                              placeholder="แจ้งคำขอเพิ่มเติม เช่น เตียงเสริม"></textarea>
+                </p>
+
+                <p>
+                    <input type="checkbox" id="confirm" name="confirm" value="yes" required>
+                    <label for="confirm">ตรวจสอบข้อมูลเรียบร้อยแล้ว</label>
+                </p>
+
+                <button type="submit">Confirm Booking</button>
+                <button type="reset">Reset</button>
+            </fieldset>
+        </form>
+    </section>
+
+    <section>
+        <h2>Booking Process</h2>
+        <ol>
+            <li>เลือกประเภทห้องพักจากหน้า Home</li>
+            <li>กรอกข้อมูลการจอง</li>
+            <li>ตรวจสอบวันที่และจำนวนผู้เข้าพัก</li>
+            <li>กด Confirm Booking</li>
+        </ol>
+    </section>
+</main>
+
+<footer>
+    <p><a href="group.html">Group Members</a></p>
+    <p>&copy; 2026 Tanda Resort</p>
+</footer>
+
+<script>
+    const checkinInput = document.getElementById('checkin');
+    const checkoutInput = document.getElementById('checkout');
+
+    // เมื่อมีการเลือกวันที่เข้าพัก
+    checkinInput.addEventListener('change', function() {
+        const checkinDate = new Date(this.value);
+
+        if (this.value) {
+            // คำนวณวันถัดไปอย่างน้อย 1 วัน สำหรับวันเช็คเอาต์
+            const nextDay = new Date(checkinDate);
+            nextDay.setDate(nextDay.getDate() + 1);
+
+            // แปลงให้อยู่ในรูปแบบ YYYY-MM-DD เพื่อใส่ในแอตทริบิวต์ min
+            const minDate = nextDay.toISOString().split('T')[0];
+            checkoutInput.min = minDate;
+
+            // ถ้าวันที่ออกเดิมที่เคยเลือกไว้ น้อยกว่าหรือเท่ากับวันที่เข้าพักใหม่ ให้รีเซ็ตค่าทิ้ง
+            if (checkoutInput.value && checkoutInput.value <= this.value) {
+                checkoutInput.value = minDate;
+            }
+        } else {
+            // ถ้าลบวันที่เข้าออก ก็ยกเลิกข้อจำกัด min
+            checkoutInput.removeAttribute('min');
+        }
+    });
+</script>
+
+</body>
+</html>
